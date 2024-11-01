@@ -6,6 +6,7 @@
 #include <time.h>
 #include <string.h>
 
+
 // ═════════════════════════════════════════════════════════════════════════════════════
 // Helper function for swapping elements
 void swap (int *a, int *b) {
@@ -59,6 +60,7 @@ void output(int a[], int n) {
 
     printf("\n");
 }
+
 
 // ═════════════════════════════════════════════════════════════════════════════════════
 // Comparison function for the built-in qsort
