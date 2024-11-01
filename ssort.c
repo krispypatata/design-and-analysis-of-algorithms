@@ -65,7 +65,8 @@ void output(int a[], int n) {
 // ═════════════════════════════════════════════════════════════════════════════════════
 // Function implementation of the shell sort algorithm
 // reference: https://www.geeksforgeeks.org/shell-sort/
-int ssort(int arr[], int n) {
+// With generic isort
+void shell_sort(int a[], int n) {
     // Start with a big gap, then reduce the gap
     for (int gap = n/2; gap > 0; gap /= 2) {
         // Do a gapped insertion sort for this gap size.
@@ -73,13 +74,35 @@ int ssort(int arr[], int n) {
         // keep adding one more element until the entire array is
         // gap sorted 
         for (int i = gap; i < n; i += 1) {
+            // add a[i] to the elements that have been gap sorted
+            // save a[i] in temp and make a hole at position i
+            int temp = a[i];
+
+            // shift earlier gap-sorted elements up until the correct 
+            // location for a[i] is found
+            int j;            
+            for (j = i; j >= gap && a[j - gap] > temp; j -= gap)
+                a[j] = a[j - gap];
+            
+            //  put temp (the original a[i]) in its correct location
+            a[j] = temp;
+        }
+    }
+}
+
+
+// ─────────────────────────────────────────────────────────────────────────────────────
+// With swap method
+void ssort(int arr[], int n) {
+    // Start with a big gap, then reduce the gap
+    for (int gap = n/2; gap > 0; gap /= 2) {
+        for (int i = gap; i < n; i += 1) {
            // Perform insertion sort for this gap size
             for (int j = i; j >= gap && arr[j - gap] > arr[j]; j -= gap) {
                 swap(&arr[j], &arr[j - gap]);
             }
         }
     }
-    return 0;
 }
 
 
@@ -105,6 +128,7 @@ int main(){
     */
     t1=clock();
     // Call algorithm here
+    // shell_sort(a,n);
     ssort(a,n);
     t2=clock();
     // ---------------------------------------------------------------------------------
