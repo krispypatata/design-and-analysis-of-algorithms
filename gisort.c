@@ -63,52 +63,20 @@ void output(int a[], int n) {
 
 
 // ═════════════════════════════════════════════════════════════════════════════════════
-// Function implementation of the quick sort algorithm
-// reference: https://www.geeksforgeeks.org/quick-sort-algorithm/
-// Partition function
-int partition(int a[], int low, int high) {
-    // Choose the pivot
-    int pivot = a[high];
-    
-    // Index of smaller element and indicates 
-    // the right position of pivot found so far
-    int i = low - 1;
-
-    // Traverse arr[low..high] and move all smaller
-    // elements to the left side. Elements from low to 
-    // i are smaller after every iteration
-    for (int j = low; j <= high - 1; j++) {
-        if (a[j] < pivot) {
-            i++;
-            swap(&a[i], &a[j]);
+// Function implementation of the insertion sort algorithm
+// reference: https://www.geeksforgeeks.org/insertion-sort-algorithm/
+void isort(int a[], int n) {
+    for (int i = 1; i < n; ++i) {
+        int temp = a[i];
+        
+        // Use another for loop to find the position of temp
+        int j;
+        for (j = i; j > 0 && a[j - 1] > temp; j--) {
+            a[j] = a[j - 1]; // Shift elements to the right
         }
+        a[j] = temp; // Place the temp in its correct position
     }
-    
-    // Move pivot after smaller elements and
-    // return its position
-    swap(&a[i + 1], &a[high]);  
-    return i + 1;
-}
 
-// ─────────────────────────────────────────────────────────────────────────────────────
-// Main function to do quick sort
-void quick_sort(int a[], int low, int high) {
-    if (low < high) {
-        // pi is the partition return index of pivot
-        int pi = partition(a, low, high);
-
-        // Recursion calls for smaller elements
-        // and greater or equals elements
-        quick_sort(a, low, pi - 1);
-        quick_sort(a, pi + 1, high);
-    }
-}
-
-
-// ═════════════════════════════════════════════════════════════════════════════════════
-// Comparison function for the built-in qsort
-int compare(const void* a, const void* b) {
-   return (*(int*)a - *(int*)b);
 }
 
 
@@ -116,7 +84,7 @@ int compare(const void* a, const void* b) {
 // TEST
 int main(){
     // Initialization of some necessary variables
-    int base = 100000;
+    int base = 10000;
     // int n = base * 1;
     // int n = base * 2;
     // int n = base * 4;
@@ -134,19 +102,7 @@ int main(){
     */
     t1=clock();
     // Call algorithm here
-    /*
-    built-in qsort()
-    reference: https://www.tutorialspoint.com/c_standard_library/c_function_qsort.htm
-    => This function accepts following parameters:
-        base − It represents pointer to the first element of the array to be sorted.
-        nitems − It represents number of element in the array.
-        size − It represents size of each element in the array.
-        compare − It represent a function pointer to a comparison function that compares two elements.
-    */
-    // qsort(a, n, sizeof(int), compare);
-
-    // Using the implemented qsort
-    quick_sort(a, 0, n - 1);
+    isort(a,n);
     t2=clock();
     // ---------------------------------------------------------------------------------
     // Print the sorted array
