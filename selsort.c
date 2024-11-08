@@ -38,9 +38,9 @@ void init(int a[], int n) {
     } 
 
     // set seed
-    // srand(7);
+    srand(7);
     // srand(13);
-    srand(17);
+    // srand(17);
 
     // Perform swapping
     for (i = 0; i < n; i++) {
@@ -98,7 +98,7 @@ int main(){
     // ---------------------------------------------------------------------------------
     // Print the initial contents of the array
     init(a,n);
-    output(a,n);
+    // output(a,n);
 
     // ---------------------------------------------------------------------------------
     /* 
@@ -110,7 +110,7 @@ int main(){
     t2=clock();
     // ---------------------------------------------------------------------------------
     // Print the sorted array
-    output(a,n);
+    // output(a,n);
 
     // Print the execution time
     printf("time elapsed: %0.2f\n", (double) (t2-t1)/(double)CLOCKS_PER_SEC);

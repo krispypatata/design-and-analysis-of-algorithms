@@ -152,10 +152,10 @@ int compare(const void* a, const void* b) {
 int main(){
     // Initialization of some necessary variables
     int base = 200000;
-    int n = base * 1;
+    // int n = base * 1;
     // int n = base * 2;
     // int n = base * 4;
-    // int n = base * 8;
+    int n = base * 8;
     int a[n], i;
     clock_t t1, t2;
     // ---------------------------------------------------------------------------------

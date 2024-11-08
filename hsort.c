@@ -119,7 +119,7 @@ void hsort(int a[], int n) {
 // TEST
 int main(){
     // Initialization of some necessary variables
-    int base = 10000;
+    int base = 200000;
     // int n = base * 1;
     // int n = base * 2;
     // int n = base * 4;
@@ -129,7 +129,7 @@ int main(){
     // ---------------------------------------------------------------------------------
     // Print the initial contents of the array
     init(a,n);
-    output(a,n);
+    // output(a,n);
 
     // ---------------------------------------------------------------------------------
     /* 
@@ -141,7 +141,7 @@ int main(){
     t2=clock();
     // ---------------------------------------------------------------------------------
     // Print the sorted array
-    output(a,n);
+    // output(a,n);
 
     // Print the execution time
     printf("time elapsed: %0.2f\n", (double) (t2-t1)/(double)CLOCKS_PER_SEC);

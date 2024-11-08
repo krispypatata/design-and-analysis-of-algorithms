@@ -22,9 +22,9 @@ void init(int a[], int n) {
     int i;
 
     /* Ascending */
-    // for (i = 0; i < n; i++) {
-    //     a[i] = i + 1;
-    // }
+    for (i = 0; i < n; i++) {
+        a[i] = i + 1;
+    }
 
     /* Descending */
     // for (i = 0; i < n; i++) {
@@ -33,19 +33,19 @@ void init(int a[], int n) {
 
     /* Random */
     // initialize array a
-    for (i = 0; i < n; i++) {
-        a[i] = i + 1;
-    } 
+    // for (i = 0; i < n; i++) {
+    //     a[i] = i + 1;
+    // } 
 
     // set seed
     // srand(7);
     // srand(13);
-    srand(17);
+    // srand(17);
 
     // Perform swapping
-    for (i = 0; i < n; i++) {
-        swap (&a[i], &a[rand()%n]);
-    }
+    // for (i = 0; i < n; i++) {
+    //     swap (&a[i], &a[rand()%n]);
+    // }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────────────

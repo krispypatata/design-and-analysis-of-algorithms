@@ -128,7 +128,7 @@ int main(){
     t2=clock();
     // ---------------------------------------------------------------------------------
     // Print the sorted array
-    output(a,n);
+    // output(a,n);
 
     // Print the execution time
     printf("time elapsed: %0.2f\n", (double) (t2-t1)/(double)CLOCKS_PER_SEC);
