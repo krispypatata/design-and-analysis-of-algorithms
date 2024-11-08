@@ -27,25 +27,25 @@ void init(int a[], int n) {
     // }
 
     /* Descending */
-    // for (i = 0; i < n; i++) {
-    //     a[i] = n - i;
-    // }
+    for (i = 0; i < n; i++) {
+        a[i] = n - i;
+    }
 
     /* Random */
     // initialize array a
-    for (i = 0; i < n; i++) {
-        a[i] = i + 1;
-    } 
+    // for (i = 0; i < n; i++) {
+    //     a[i] = i + 1;
+    // } 
 
     // set seed
     // srand(7);
     // srand(13);
-    srand(17);
+    // srand(17);
 
     // Perform swapping
-    for (i = 0; i < n; i++) {
-        swap (&a[i], &a[rand()%n]);
-    }
+    // for (i = 0; i < n; i++) {
+    //     swap (&a[i], &a[rand()%n]);
+    // }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────────────
@@ -66,15 +66,49 @@ void output(int a[], int n) {
 // Function implementation of the quick sort algorithm
 // reference: https://www.geeksforgeeks.org/quick-sort-algorithm/
 // Partition function
-int partition(int a[], int low, int high) {
-    // Choose the pivot
-    int pivot = a[high];
+// int partition(int a[], int low, int high) {
+//     // Choose the pivot
+//     int pivot = a[high];
     
+//     // Index of smaller element and indicates 
+//     // the right position of pivot found so far
+//     int i = low - 1;
+
+//     // Traverse arr[low..high] and move all smaller
+//     // elements to the left side. Elements from low to 
+//     // i are smaller after every iteration
+//     for (int j = low; j <= high - 1; j++) {
+//         if (a[j] < pivot) {
+//             i++;
+//             swap(&a[i], &a[j]);
+//         }
+//     }
+    
+//     // Move pivot after smaller elements and
+//     // return its position
+//     swap(&a[i + 1], &a[high]);  
+//     return i + 1;
+// }
+
+// Partition function using median-of-three pivot selection
+int partition(int a[], int low, int high) {
+    // Choose median of three pivot
+    int mid = low + (high - low) / 2;
+    if (a[mid] < a[low])
+        swap(&a[mid], &a[low]);
+    if (a[high] < a[low])
+        swap(&a[high], &a[low]);
+    if (a[high] < a[mid])
+        swap(&a[high], &a[mid]);
+    
+    int pivot = a[mid];
+    swap(&a[mid], &a[high]);
+
     // Index of smaller element and indicates 
     // the right position of pivot found so far
     int i = low - 1;
 
-    // Traverse arr[low..high] and move all smaller
+    // Traverse arr[low..high-1] and move all smaller
     // elements to the left side. Elements from low to 
     // i are smaller after every iteration
     for (int j = low; j <= high - 1; j++) {
@@ -86,9 +120,10 @@ int partition(int a[], int low, int high) {
     
     // Move pivot after smaller elements and
     // return its position
-    swap(&a[i + 1], &a[high]);  
+    swap(&a[i + 1], &a[high]);
     return i + 1;
 }
+
 
 // ─────────────────────────────────────────────────────────────────────────────────────
 // Main function to do quick sort
@@ -116,17 +151,17 @@ int compare(const void* a, const void* b) {
 // TEST
 int main(){
     // Initialization of some necessary variables
-    int base = 100000;
-    // int n = base * 1;
+    int base = 200000;
+    int n = base * 1;
     // int n = base * 2;
     // int n = base * 4;
-    int n = base * 8;
+    // int n = base * 8;
     int a[n], i;
     clock_t t1, t2;
     // ---------------------------------------------------------------------------------
     // Print the initial contents of the array
     init(a,n);
-    output(a,n);
+    // output(a,n);
 
     // ---------------------------------------------------------------------------------
     /* 
@@ -150,7 +185,7 @@ int main(){
     t2=clock();
     // ---------------------------------------------------------------------------------
     // Print the sorted array
-    output(a,n);
+    // output(a,n);
 
     // Print the execution time
     printf("time elapsed: %0.2f\n", (double) (t2-t1)/(double)CLOCKS_PER_SEC);
