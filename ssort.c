@@ -106,6 +106,18 @@ void ssort(int arr[], int n) {
 }
 
 
+void shsort(int a[], int n){
+  int i,j,d;
+
+  for(d=n/2;d>0;d/=2)
+  for(i=d;i<n;i++)
+    for(j=i;j>d-1;j-=d)
+      if(a[j]<a[j-d])
+	swap(&a[j],&a[j-d]);
+      else
+	break;
+}
+
 // ═════════════════════════════════════════════════════════════════════════════════════
 // TEST
 int main(){
@@ -129,7 +141,8 @@ int main(){
     t1=clock();
     // Call algorithm here
     // shell_sort(a,n);
-    ssort(a,n);
+    // ssort(a,n);
+    shsort(a,n);
     t2=clock();
     // ---------------------------------------------------------------------------------
     // Print the sorted array
