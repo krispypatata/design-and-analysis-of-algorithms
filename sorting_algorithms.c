@@ -222,3 +222,215 @@ void quick_sort(int a[], int low, int high) {
         quick_sort(a, pi + 1, high);
     }
 } // end of quicksort
+
+
+
+
+
+
+
+
+
+
+
+
+// ═════════════════════════════════════════════════════════════════════════════════════
+// SORTING ALGORITHMS (GENERICS)
+// ═════════════════════════════════════════════════════════════════════════════════════
+// Helper functions for generic versions of sorting algorithms
+int cmpint(const void *p1, const void *p2){
+    return ((*((int *)p1)) - (*((int *)p2)) > 0 );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────────────
+void genswap(const void *p1, const void *p2, int size){
+    void *ptemp=(void *)malloc(size);
+    memcpy(ptemp,(void *)p1,size);
+    memcpy((void *)p1,(void *)p2,size);
+    memcpy((void *)p2,ptemp,size);
+    free(ptemp);
+}
+
+// ═════════════════════════════════════════════════════════════════════════════════════
+// Generic Bubble Sort function
+void genbsort(void *base, int n, int size, int (*cmp)(const void *, const void *)){
+    int i, j;
+    for (i = 0; i < n - 1; i++) {
+        for (j = 0; j < n - i - 1; j++) {
+            if (cmp(base + (j * size), base + ((j + 1) * size))) {
+                genswap(base + (j * size), base + ((j + 1) * size), size);
+            }
+        }
+    }
+}
+
+// genbsort(a, n, sizeof(int), cmpint);
+
+// ═════════════════════════════════════════════════════════════════════════════════════
+// Generic Selection Sort function
+void genselsort(void *base, int n, int size, int (*cmp)(const void *, const void *)){
+    int i, j, index_of_min;
+
+    for (i = 0; i < n - 1; i++) {
+        // find the index with the minimum value
+        index_of_min = i;
+
+        for (j = i + 1; j < n; j++) {
+            if (cmp(base + (index_of_min * size), base + (j * size))) {
+                index_of_min = j;
+            }
+        }
+
+        // swap elements
+        genswap(base + (i * size), base + (index_of_min * size), size);
+    }
+}
+
+// genselsort(a, n, sizeof(int), cmpint);
+
+
+// ═════════════════════════════════════════════════════════════════════════════════════
+// Generic Insertion Sort function
+void genisort(void *base, int n, int size, int (*cmp)(const void *, const void *)){
+    int i,j;
+
+    for(i=1;i<n;i++)
+        for(j=i;j>0;j--)
+	     if(cmp(base+((j-1)*size),base+(j*size)))
+                 genswap(base+((j-1)*size),base+(j*size),size);
+             else break;
+}
+
+// genisort(a, n, sizeof(int), cmpint);
+
+// ═════════════════════════════════════════════════════════════════════════════════════
+// Generic Shell Sort function
+void genshsort(void *base, int n, int size, int (*cmp)(const void *, const void *)){
+    int i, j, d;
+
+    for (d = n / 2; d > 0; d /= 2) {
+        for (i = d; i < n; i++) {
+            for (j = i; j > d - 1; j -= d) {
+                if (cmp(base + (j * size), base + ((j - d) * size))) {
+                    genswap(base + (j * size), base + ((j - d) * size), size);
+                } else {
+                    break;
+                }
+            }
+        }
+    }
+}
+
+// genshsort(a, n, sizeof(int), cmpint);
+
+// ═════════════════════════════════════════════════════════════════════════════════════
+// Generic merge function
+void genmerge(void *base, int n, int size, int (*cmp)(const void *, const void *)){
+    int i, j, k, mid = n / 2;
+    void *temp = malloc(n * size);
+    
+    for (i = 0, j = mid, k = 0; k < n; k++) {
+        if (i < mid && (j >= n || cmp(base + (i * size), base + (j * size)) <= 0)) {
+            memcpy(temp + (k * size), base + (i * size), size);
+            i++;
+        } else {
+            memcpy(temp + (k * size), base + (j * size), size);
+            j++;
+        }
+    }
+
+    memcpy(base, temp, n * size); // copy temp back to base
+    free(temp);
+}
+
+// Generic merge sort function
+void genmsort(void *base, int n, int size, int (*cmp)(const void *, const void *)){
+    if (n > 1) {
+        int mid = n / 2;
+        genmsort(base, mid, size, cmp);
+        genmsort(base + (mid * size), n - mid, size, cmp);
+        genmerge(base, n, size, cmp);
+    }
+} // end of genmsort
+
+// genmsort(a, n, sizeof(int), cmpint);
+
+
+// ═════════════════════════════════════════════════════════════════════════════════════
+// Generic heapify function
+void genheapify(void *base, int n, int i, int size, int (*cmp)(const void *, const void *)) {
+    int largest = i;
+    int l = 2 * i + 1;
+    int r = 2 * i + 2;
+
+    if (l < n && cmp(base + (l * size), base + (largest * size)) > 0) {
+        largest = l;
+    }
+
+    if (r < n && cmp(base + (r * size), base + (largest * size)) > 0) {
+        largest = r;
+    }
+
+    if (largest != i) {
+        genswap(base + (i * size), base + (largest * size), size);
+        genheapify(base, n, largest, size, cmp);
+    }
+}
+
+// Generic heap sort function
+void genhsort(void *base, int n, int size, int (*cmp)(const void *, const void *)) {
+    for (int i = n / 2 - 1; i >= 0; i--) {
+        genheapify(base, n, i, size, cmp);
+    }
+
+    for (int i = n - 1; i > 0; i--) {
+        genswap(base + (0 * size), base + (i * size), size);
+        genheapify(base, i, 0, size, cmp);
+    }
+} // end of genhsort
+
+// genhsort(a, n, sizeof(int), cmpint);
+
+
+// ═════════════════════════════════════════════════════════════════════════════════════
+// Generic partition function using median-of-three pivot selection
+int genpartition(void *base, int low, int high, int size, int (*cmp)(const void *, const void *)) {
+    int mid = low + (high - low) / 2;
+    
+    // Median of three pivot selection
+    if (cmp(base + (mid * size), base + (low * size)) < 0)
+        genswap(base + (mid * size), base + (low * size), size);
+    if (cmp(base + (high * size), base + (low * size)) < 0)
+        genswap(base + (high * size), base + (low * size), size);
+    if (cmp(base + (high * size), base + (mid * size)) < 0)
+        genswap(base + (high * size), base + (mid * size), size);
+    
+    void *pivot = base + (mid * size);
+    genswap(base + (mid * size), base + (high * size), size);
+
+    int i = low - 1;
+
+    // Traverse the array and move all smaller elements to the left side
+    for (int j = low; j <= high - 1; j++) {
+        if (cmp(base + (j * size), pivot) < 0) {
+            i++;
+            genswap(base + (i * size), base + (j * size), size);
+        }
+    }
+
+    // Move pivot to the correct position
+    genswap(base + ((i + 1) * size), base + (high * size), size);
+    return i + 1;
+}
+
+// Generic quick sort function
+void genqsort(void *base, int low, int high, int size, int (*cmp)(const void *, const void *)) {
+    if (low < high) {
+        int pi = genpartition(base, low, high, size, cmp);
+
+        genqsort(base, low, pi - 1, size, cmp);
+        genqsort(base, pi + 1, high, size, cmp);
+    }
+} // end of genqsort
+
+// genqsort(a, 0, n - 1, sizeof(int), cmpint);

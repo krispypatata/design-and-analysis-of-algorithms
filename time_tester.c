@@ -62,10 +62,14 @@ void run_tests(int base) {
 
     // Perform tests for each seed type and array size
     for (seed_type = 0; seed_type < 5; seed_type++) {
+        // printf("Seed: %d\n", seed_type);
+
         for (i = 0; i < 4; i++) {
             multiplier = sizes[i];
             int n = base * multiplier;  // Calculate array size n, n*2, n*4, n*8
-
+            
+            // Print size
+            // printf("Size: %d\n", n);
             for (j = 0; j < 3; j++) {  // Repeat the test 3 times
                 // Initialize the array with the appropriate order
                 init(a, n, seed_type);
@@ -78,19 +82,33 @@ void run_tests(int base) {
                 // selsort(a, n);
                 // isort(a, n);
                 // msort(a, n);
-                // hsort(a, n);
+                hsort(a, n);
                 // shsort(a, n);
-                quick_sort(a, 0, n - 1);
+                // quick_sort(a, 0, n - 1);
+                // qsort(a, n, sizeof(int), compare); // built-in qsort
+
+                // Generic sorting functions
+                // genbsort(a, n, sizeof(int), cmpint);
+                // genselsort(a, n, sizeof(int), cmpint);
+                // genisort(a, n, sizeof(int), cmpint);
+                // genshsort(a, n, sizeof(int), cmpint);
+                // genmsort(a, n, sizeof(int), cmpint);
+                // genhsort(a, n, sizeof(int), cmpint);
+                // genqsort(a, 0, n - 1, sizeof(int), cmpint);
+
                 
                 t2 = clock();
 
                 // Output the execution time for this test case
-                printf("Seed: %d, Size: %d, Trial: %d, Time: %0.2f seconds\n", 
-                    seed_type, n, j + 1, (double)(t2 - t1) / CLOCKS_PER_SEC);
+                printf("Seed: %d, Size: %d, Trial: %d, Time: %0.2f seconds\n", seed_type, n, j + 1, (double)(t2 - t1) / CLOCKS_PER_SEC);
+
+                // Times only:
+                // printf("%0.2f\n", (double)(t2 - t1) / CLOCKS_PER_SEC);
             }
+            // printf("\n"); // separates sizes
         }
 
-        printf("\n"); // separates seed type
+        printf("\n"); // separates seed types
     }
 }
 
