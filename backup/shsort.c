@@ -1,6 +1,8 @@
 // Evangelista, Bill Jerson
 // Gabinete, Keith Ginoel
 
+#include "sorting_algorithms.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -93,7 +95,7 @@ void shell_sort(int a[], int n) {
 
 // ─────────────────────────────────────────────────────────────────────────────────────
 // With swap method
-void ssort(int arr[], int n) {
+void short_old(int arr[], int n) {
     // Start with a big gap, then reduce the gap
     for (int gap = n/2; gap > 0; gap /= 2) {
         for (int i = gap; i < n; i += 1) {
@@ -105,7 +107,7 @@ void ssort(int arr[], int n) {
     }
 }
 
-
+// Lab's implementation
 void shsort(int a[], int n){
   int i,j,d;
 

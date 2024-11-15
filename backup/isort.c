@@ -1,6 +1,7 @@
 // Evangelista, Bill Jerson
 // Gabinete, Keith Ginoel
 
+#include "sorting_algorithms.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -23,9 +24,9 @@ void init(int a[], int n) {
     int i;
 
     /* Ascending */
-    // for (i = 0; i < n; i++) {
-    //     a[i] = i + 1;
-    // }
+    for (i = 0; i < n; i++) {
+        a[i] = i + 1;
+    }
 
     /* Descending */
     // for (i = 0; i < n; i++) {
@@ -34,19 +35,19 @@ void init(int a[], int n) {
 
     /* Random */
     // initialize array a
-    for (i = 0; i < n; i++) {
-        a[i] = i + 1;
-    } 
+    // for (i = 0; i < n; i++) {
+    //     a[i] = i + 1;
+    // } 
 
     // set seed
-    srand(7);
+    // srand(7);
     // srand(13);
     // srand(17);
 
     // Perform swapping
-    for (i = 0; i < n; i++) {
-        swap (&a[i], &a[rand()%n]);
-    }
+    // for (i = 0; i < n; i++) {
+    //     swap (&a[i], &a[rand()%n]);
+    // }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────────────
@@ -64,24 +65,19 @@ void output(int a[], int n) {
 
 
 // ═════════════════════════════════════════════════════════════════════════════════════
-// Function implementation of the selection sort algorithm
-// reference: https://www.geeksforgeeks.org/selection-sort-algorithm-2/
-void selsort(int a[], int n) {
-    int i, j, index_of_min;
+// Function implementation of the insertion sort algorithm
+void isort(int a[], int n) {
+    int i, j;
 
-    for (i = 0; i < n - 1; i++) {
-        // find the index with the minimum value
-        index_of_min = i;
-
-        for (j = i + 1; j < n; j++) {
-            if (a[index_of_min] > a[j]) {
-                index_of_min = j;
+    for (i = 1; i < n; i++) {
+        for (j = i; j > 0; j--) {
+            if (a[j - 1] > a[j]) {
+                swap( &a[j - 1], &a[j]);
             }
+            else break;
         }
-
-        // swap elements
-        swap(&a[i], &a[index_of_min]);
     }
+
 }
 
 
@@ -99,7 +95,7 @@ int main(){
     // ---------------------------------------------------------------------------------
     // Print the initial contents of the array
     init(a,n);
-    // output(a,n);
+    output(a,n);
 
     // ---------------------------------------------------------------------------------
     /* 
@@ -107,11 +103,11 @@ int main(){
     */
     t1=clock();
     // Call algorithm here
-    selsort(a,n);
+    isort(a,n);
     t2=clock();
     // ---------------------------------------------------------------------------------
     // Print the sorted array
-    // output(a,n);
+    output(a,n);
 
     // Print the execution time
     printf("time elapsed: %0.2f\n", (double) (t2-t1)/(double)CLOCKS_PER_SEC);

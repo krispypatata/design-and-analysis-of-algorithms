@@ -1,6 +1,7 @@
 // Evangelista, Bill Jerson
 // Gabinete, Keith Ginoel
 
+#include "sorting_algorithms.h"
 
 #include <stdio.h>
 #include <stdlib.h>

@@ -4,6 +4,7 @@
         "stdio.h": "c",
         "stdlib.h": "c",
         "time.h": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "sorting_algorithms.h": "c"
     }
 }

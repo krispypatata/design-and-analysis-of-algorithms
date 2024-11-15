@@ -1,7 +1,7 @@
 .PHONY: qsort msort isort shsort bsort selsort hsort gisort
 
 test:
-	gcc time_tester.c sorting_algorithms.c -o time_tester
+	gcc -o time_tester.c qsort.c msort.c isort.c shsort.c bsort.c selsort.c hsort.c -o time_tester
 	./time_tester
 
 qsort:

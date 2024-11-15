@@ -1,12 +1,13 @@
 // Evangelista, Bill Jerson
 // Gabinete, Keith Ginoel
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <stdbool.h>
 
+#define BILLION 1000000000L
 
 // ═════════════════════════════════════════════════════════════════════════════════════
 // Helper function for swapping elements
@@ -23,9 +24,9 @@ void init(int a[], int n) {
     int i;
 
     /* Ascending */
-    // for (i = 0; i < n; i++) {
-    //     a[i] = i + 1;
-    // }
+    for (i = 0; i < n; i++) {
+        a[i] = i + 1;
+    }
 
     /* Descending */
     // for (i = 0; i < n; i++) {
@@ -34,19 +35,19 @@ void init(int a[], int n) {
 
     /* Random */
     // initialize array a
-    for (i = 0; i < n; i++) {
-        a[i] = i + 1;
-    } 
+    // for (i = 0; i < n; i++) {
+    //     a[i] = i + 1;
+    // } 
 
     // set seed
-    srand(7);
+    // srand(7);
     // srand(13);
     // srand(17);
 
     // Perform swapping
-    for (i = 0; i < n; i++) {
-        swap (&a[i], &a[rand()%n]);
-    }
+    // for (i = 0; i < n; i++) {
+    //     swap (&a[i], &a[rand()%n]);
+    // }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────────────
@@ -64,23 +65,39 @@ void output(int a[], int n) {
 
 
 // ═════════════════════════════════════════════════════════════════════════════════════
-// Function implementation of the selection sort algorithm
-// reference: https://www.geeksforgeeks.org/selection-sort-algorithm-2/
-void selsort(int a[], int n) {
-    int i, j, index_of_min;
+// Function implementation of the bubble sort algorithm (optimized)
+// https://www.geeksforgeeks.org/bubble-sort-algorithm/
+void bsort_optimized(int a[], int n) {
+    int i, j;
+    bool is_swapped;
 
-    for (i = 0; i < n - 1; i++) {
-        // find the index with the minimum value
-        index_of_min = i;
-
-        for (j = i + 1; j < n; j++) {
-            if (a[index_of_min] > a[j]) {
-                index_of_min = j;
-            }
+    for (i = 0; i < n; i++) {
+        is_swapped = false;
+        for (j = 1; j < n - i - 1; j ++) {
+            if (a[j] > a[j + 1]) 
+                swap(&a[j], &a[j + 1]);
+                is_swapped = true;
         }
 
-        // swap elements
-        swap(&a[i], &a[index_of_min]);
+        // If no two elements were swapped by inner loop,
+        // then break
+        if (is_swapped == false)
+            break;
+    }
+}
+
+
+// ═════════════════════════════════════════════════════════════════════════════════════
+// Function implementation of the bubble sort algorithm
+void bsort(int a[], int n) {
+    int i, j;
+
+    for (i = 0; i < n; i++) {
+        for (j = 1; j < n - i; j++) {
+            if (a[j - 1] > a[j]) 
+                swap(&a[j - 1], &a[j]);
+        }
+
     }
 }
 
@@ -96,9 +113,12 @@ int main(){
     int n = base * 8;
     int a[n], i;
     clock_t t1, t2;
+
+    // struct timespec t1, t2;
+    double elapsed;
     // ---------------------------------------------------------------------------------
     // Print the initial contents of the array
-    init(a,n);
+    // init(a,n);
     // output(a,n);
 
     // ---------------------------------------------------------------------------------
@@ -107,12 +127,19 @@ int main(){
     */
     t1=clock();
     // Call algorithm here
-    selsort(a,n);
+    bsort(a,n);
+    // bsort_optimized(a,n);
     t2=clock();
     // ---------------------------------------------------------------------------------
+    // clock_gettime(CLOCK_MONOTONIC, &t1);
+    // bsort(a, n);
+    // clock_gettime(CLOCK_MONOTONIC, &t2);
     // Print the sorted array
     // output(a,n);
 
     // Print the execution time
     printf("time elapsed: %0.2f\n", (double) (t2-t1)/(double)CLOCKS_PER_SEC);
+    
+    // elapsed = (t2.tv_sec - t1.tv_sec) + (t2.tv_nsec - t1.tv_nsec) / (double) BILLION;
+    // printf("Time elapsed: %.9f seconds\n", elapsed);
 }

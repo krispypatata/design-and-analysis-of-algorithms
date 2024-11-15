@@ -18,7 +18,7 @@ void swap(int *a, int *b) {
 // Helper function for initializing the contents of an array
 void init(int a[], int n, int seed_type) {
     int i;
-
+    
     if (seed_type == 0) { // Ascending order
         for (i = 0; i < n; i++) {
             a[i] = i + 1;
@@ -32,18 +32,13 @@ void init(int a[], int n, int seed_type) {
             a[i] = i + 1;
         }
         
-        // Set a deterministic seed based on seed_type
-        srand(seed_type * n); // Unique seed per array size and seed type
-
-        // Apply Fisher-Yates shuffle for unbiased randomization
-        for (i = n - 1; i > 0; i--) {
-            int j = rand() % (i + 1);
-            swap(&a[i], &a[j]);
+        // Set random seed based on the seed_type
+        srand(seed_type); // Different seeds for different runs
+        for (i = 0; i < n; i++) {
+            swap(&a[i], &a[rand() % n]);
         }
     }
 }
-
-
 
 // Helper function for printing the contents of an array (optional)
 void output(int a[], int n) {
@@ -55,39 +50,15 @@ void output(int a[], int n) {
 }
 
 // Function implementation of the bubble sort algorithm
-// Basic Bubble Sort implementation
 void bsort(int a[], int n) {
     int i, j;
-    for (i = 0; i < n - 1; i++) {
-        for (j = 0; j < n - i - 1; j++) {
-            if (a[j] > a[j + 1]) {
-                swap(&a[j], &a[j + 1]);
-            }
+    for (i = 0; i < n; i++) {
+        for (j = 1; j < n - i; j++) {
+            if (a[j - 1] > a[j]) 
+                swap(&a[j - 1], &a[j]);
         }
     }
 }
-
-// Optimized Bubble Sort to improve branch prediction
-// void bsort(int a[], int n) {
-//     int i, j;
-//     bool swapped;
-
-//     for (i = 0; i < n - 1; i++) {
-//         swapped = false;
-//         for (j = 0; j < n - i - 1; j++) {
-//             if (a[j] > a[j + 1]) {
-//                 swap(&a[j], &a[j + 1]);
-//                 swapped = true;
-//             }
-//         }
-        
-//         // If no elements were swapped in this pass, the array is already sorted
-//         if (!swapped) {
-//             break;
-//         }
-//     }
-// }
-
 
 // Function to perform testing and output results
 void run_tests(int base) {

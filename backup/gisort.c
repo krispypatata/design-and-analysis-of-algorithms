@@ -1,7 +1,6 @@
 // Evangelista, Bill Jerson
 // Gabinete, Keith Ginoel
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -39,9 +38,9 @@ void init(int a[], int n) {
     } 
 
     // set seed
-    srand(7);
+    // srand(7);
     // srand(13);
-    // srand(17);
+    srand(17);
 
     // Perform swapping
     for (i = 0; i < n; i++) {
@@ -64,24 +63,20 @@ void output(int a[], int n) {
 
 
 // ═════════════════════════════════════════════════════════════════════════════════════
-// Function implementation of the selection sort algorithm
-// reference: https://www.geeksforgeeks.org/selection-sort-algorithm-2/
-void selsort(int a[], int n) {
-    int i, j, index_of_min;
-
-    for (i = 0; i < n - 1; i++) {
-        // find the index with the minimum value
-        index_of_min = i;
-
-        for (j = i + 1; j < n; j++) {
-            if (a[index_of_min] > a[j]) {
-                index_of_min = j;
-            }
+// Function implementation of the insertion sort algorithm
+// reference: https://www.geeksforgeeks.org/insertion-sort-algorithm/
+void isort(int a[], int n) {
+    for (int i = 1; i < n; ++i) {
+        int temp = a[i];
+        
+        // Use another for loop to find the position of temp
+        int j;
+        for (j = i; j > 0 && a[j - 1] > temp; j--) {
+            a[j] = a[j - 1]; // Shift elements to the right
         }
-
-        // swap elements
-        swap(&a[i], &a[index_of_min]);
+        a[j] = temp; // Place the temp in its correct position
     }
+
 }
 
 
@@ -99,7 +94,7 @@ int main(){
     // ---------------------------------------------------------------------------------
     // Print the initial contents of the array
     init(a,n);
-    // output(a,n);
+    output(a,n);
 
     // ---------------------------------------------------------------------------------
     /* 
@@ -107,11 +102,11 @@ int main(){
     */
     t1=clock();
     // Call algorithm here
-    selsort(a,n);
+    isort(a,n);
     t2=clock();
     // ---------------------------------------------------------------------------------
     // Print the sorted array
-    // output(a,n);
+    output(a,n);
 
     // Print the execution time
     printf("time elapsed: %0.2f\n", (double) (t2-t1)/(double)CLOCKS_PER_SEC);

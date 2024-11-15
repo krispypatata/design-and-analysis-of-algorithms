@@ -1,6 +1,7 @@
 // Evangelista, Bill Jerson
 // Gabinete, Keith Ginoel
 
+#include "sorting_algorithms.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,9 +40,9 @@ void init(int a[], int n) {
     } 
 
     // set seed
-    srand(7);
+    // srand(7);
     // srand(13);
-    // srand(17);
+    srand(17);
 
     // Perform swapping
     for (i = 0; i < n; i++) {
@@ -64,25 +65,30 @@ void output(int a[], int n) {
 
 
 // ═════════════════════════════════════════════════════════════════════════════════════
-// Function implementation of the selection sort algorithm
-// reference: https://www.geeksforgeeks.org/selection-sort-algorithm-2/
-void selsort(int a[], int n) {
-    int i, j, index_of_min;
+// Function implementation of the merge sort algorithm
+void merge(int a[], int n)
+{
+    int i, j, k, mid = n / 2, temp[n];
 
-    for (i = 0; i < n - 1; i++) {
-        // find the index with the minimum value
-        index_of_min = i;
-
-        for (j = i + 1; j < n; j++) {
-            if (a[index_of_min] > a[j]) {
-                index_of_min = j;
-            }
-        }
-
-        // swap elements
-        swap(&a[i], &a[index_of_min]);
+    for (i = 0, j = mid, k = 0; k < n; k++) {
+        temp[k] = (i < mid && (j >= n || a[i] <= a[j])) ? a[i++] : a[j++];
     }
-}
+        
+
+    memcpy(a, temp, n * sizeof(int)); // copy a back to temp
+
+} // end of merge
+
+// ─────────────────────────────────────────────────────────────────────────────────────
+void msort(int a[], int n)
+{
+    if (n > 1)
+    {
+        msort(a, n / 2);
+        msort(&a[n / 2], n - n / 2);
+        merge(a, n);
+    }
+} // end of msort
 
 
 // ═════════════════════════════════════════════════════════════════════════════════════
@@ -99,7 +105,7 @@ int main(){
     // ---------------------------------------------------------------------------------
     // Print the initial contents of the array
     init(a,n);
-    // output(a,n);
+    output(a,n);
 
     // ---------------------------------------------------------------------------------
     /* 
@@ -107,11 +113,11 @@ int main(){
     */
     t1=clock();
     // Call algorithm here
-    selsort(a,n);
+    msort(a,n);
     t2=clock();
     // ---------------------------------------------------------------------------------
     // Print the sorted array
-    // output(a,n);
+    output(a,n);
 
     // Print the execution time
     printf("time elapsed: %0.2f\n", (double) (t2-t1)/(double)CLOCKS_PER_SEC);

@@ -1,6 +1,7 @@
 // Evangelista, Bill Jerson
 // Gabinete, Keith Ginoel
 
+#include "sorting_algorithms.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,9 +40,9 @@ void init(int a[], int n) {
     } 
 
     // set seed
-    srand(7);
+    // srand(7);
     // srand(13);
-    // srand(17);
+    srand(17);
 
     // Perform swapping
     for (i = 0; i < n; i++) {
@@ -64,23 +65,54 @@ void output(int a[], int n) {
 
 
 // ═════════════════════════════════════════════════════════════════════════════════════
-// Function implementation of the selection sort algorithm
-// reference: https://www.geeksforgeeks.org/selection-sort-algorithm-2/
-void selsort(int a[], int n) {
-    int i, j, index_of_min;
+// Function implementation of the heap sort algorithm
+// reference: https://www.geeksforgeeks.org/heap-sort/
+// To heapify a subtree rooted with node i
+// which is an index in arr[].
+void heapify(int a[], int n, int i) {
+    // Initialize largest as root
+    int largest = i; 
 
-    for (i = 0; i < n - 1; i++) {
-        // find the index with the minimum value
-        index_of_min = i;
+    // left index = 2*i + 1
+    int l = 2 * i + 1; 
 
-        for (j = i + 1; j < n; j++) {
-            if (a[index_of_min] > a[j]) {
-                index_of_min = j;
-            }
-        }
+    // right index = 2*i + 2
+    int r = 2 * i + 2;
 
-        // swap elements
-        swap(&a[i], &a[index_of_min]);
+    // If left child is larger than root
+    if (l < n && a[l] > a[largest]) {
+        largest = l;
+    }
+
+    // If right child is larger than largest so far
+    if (r < n && a[r] > a[largest]) {
+        largest = r;
+    }
+
+    // If largest is not root
+    if (largest != i) {
+        swap(&a[i], &a[largest]);
+
+        // Recursively heapify the affected sub-tree
+        heapify(a, n, largest);
+    }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────────────
+// Main function to do heap sort
+void hsort(int a[], int n) {
+    // Build heap (rearrange array)
+    for (int i = n / 2 - 1; i >= 0; i--) {
+        heapify(a, n, i);
+    }
+
+    // One by one extract an element from heap
+    for (int i = n - 1; i > 0; i--) {
+        // Move current root to end
+        swap(&a[0], &a[i]);
+
+        // Call max heapify on the reduced heap
+        heapify(a, i, 0);
     }
 }
 
@@ -89,7 +121,7 @@ void selsort(int a[], int n) {
 // TEST
 int main(){
     // Initialization of some necessary variables
-    int base = 10000;
+    int base = 200000;
     // int n = base * 1;
     // int n = base * 2;
     // int n = base * 4;
@@ -107,7 +139,7 @@ int main(){
     */
     t1=clock();
     // Call algorithm here
-    selsort(a,n);
+    hsort(a,n);
     t2=clock();
     // ---------------------------------------------------------------------------------
     // Print the sorted array
