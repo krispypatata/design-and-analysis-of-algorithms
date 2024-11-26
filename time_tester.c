@@ -62,14 +62,14 @@ void run_tests(int base) {
 
     // Perform tests for each seed type and array size
     for (seed_type = 0; seed_type < 5; seed_type++) {
-        // printf("Seed: %d\n", seed_type);
+        printf("Seed: %d\n", seed_type);
 
         for (i = 0; i < 4; i++) {
             multiplier = sizes[i];
             int n = base * multiplier;  // Calculate array size n, n*2, n*4, n*8
             
             // Print size
-            // printf("Size: %d\n", n);
+            printf("Size: %d\n", n);
             for (j = 0; j < 3; j++) {  // Repeat the test 3 times
                 // Initialize the array with the appropriate order
                 init(a, n, seed_type);
@@ -100,12 +100,12 @@ void run_tests(int base) {
                 t2 = clock();
 
                 // Output the execution time for this test case
-                printf("Seed: %d, Size: %d, Trial: %d, Time: %0.2f seconds\n", seed_type, n, j + 1, (double)(t2 - t1) / CLOCKS_PER_SEC);
+                // printf("Seed: %d, Size: %d, Trial: %d, Time: %0.2f seconds\n", seed_type, n, j + 1, (double)(t2 - t1) / CLOCKS_PER_SEC);
 
                 // Times only:
-                // printf("%0.2f\n", (double)(t2 - t1) / CLOCKS_PER_SEC);
+                printf("%0.2f\t", (double)(t2 - t1) / CLOCKS_PER_SEC);
             }
-            // printf("\n"); // separates sizes
+            printf("\n\n"); // separates sizes
         }
 
         printf("\n"); // separates seed types
