@@ -13,7 +13,7 @@
 // Helper function for printing the contents of an array
 void output(int a[], int n) {
     int i;
-    for (i = 0; i < n; i++)
+    for (i = 0; i < n; i ++)
         printf("%i\n", a[i]);
     printf("\n");
 }
@@ -36,16 +36,14 @@ void init(int a[], int n, int seed_type) {
         for (i = 0; i < n; i++) {
             a[i] = i + 1;
         }
-
+        
         // Set a deterministic seed based on seed_type
         srand(seed_type * n); // Unique seed per array size and seed type
 
         // Apply Fisher-Yates shuffle for unbiased randomization
         for (i = n - 1; i > 0; i--) {
             int j = rand() % (i + 1);
-            int temp = a[i];
-            a[i] = a[j];
-            a[j] = temp;
+            swap(&a[i], &a[j]);
         }
     }
 }
@@ -56,41 +54,33 @@ void init(int a[], int n, int seed_type) {
 void run_tests(int base) {
     int a[base * 8];  // Maximum size array for n*8
     clock_t t1, t2;
-
+    
     // Array sizes (n, n*2, n*4, n*8)
     int sizes[] = {1, 2, 4, 8};
     int seed_types[] = {0, 1, 7, 13, 17}; // 0: Ascending, 1: Descending, 7/13/17: Random with different seeds
     int i, j, k, multiplier, seed_type;
 
-    // Prepare CSV output
-    FILE *file = fopen("output.csv", "w");
-    if (file == NULL) {
-        perror("Error opening file");
-        return;
-    }
-
     // Perform tests for each seed type and array size
     for (seed_type = 0; seed_type < 5; seed_type++) {
+        printf("Seed: %d\n", seed_type);
+
         for (i = 0; i < 4; i++) {
             multiplier = sizes[i];
             int n = base * multiplier;  // Calculate array size n, n*2, n*4, n*8
-
-            // Repeat the test 3 times
-            for (j = 0; j < 3; j++) {
+            
+            // Print size
+            printf("Size: %d\n", n);
+            for (j = 0; j < 3; j++) {  // Repeat the test 3 times
                 // Initialize the array with the appropriate order
                 init(a, n, seed_type);
-
+                
                 // Measure execution time of the algorithm
                 t1 = clock();
-
-                // Call the sorting function (only `isort` enabled as example)
-                isort(a, n);
-
-
+                
                 // Call the sorting functions
                 // bsort(a, n);  
                 // selsort(a, n);
-                // isort(a, n);
+                isort(a, n);
                 // msort(a, n);
                 // hsort(a, n);
                 // shsort(a, n);
@@ -106,28 +96,20 @@ void run_tests(int base) {
                 // genhsort(a, n, sizeof(int), cmpint);
                 // genqsort(a, 0, n - 1, sizeof(int), cmpint);
 
-
-
-
-
-
-
+                
                 t2 = clock();
 
                 // Output the execution time for this test case
-                double time_taken = (double)(t2 - t1) / CLOCKS_PER_SEC;
+                // printf("Seed: %d, Size: %d, Trial: %d, Time: %0.2f seconds\n", seed_type, n, j + 1, (double)(t2 - t1) / CLOCKS_PER_SEC);
 
-                // Write time to CSV
-                fprintf(file, "%0.2f", time_taken);
-                if (j < 2) {
-                    fprintf(file, ",");
-                }
+                // Times only:
+                printf("%0.2f\n", (double)(t2 - t1) / CLOCKS_PER_SEC);
             }
-            fprintf(file, "\n");
+            printf("\n"); // separates sizes
         }
-    }
 
-    fclose(file);
+        printf("\n"); // separates seed types
+    }
 }
 
 // Main function
@@ -143,8 +125,6 @@ int main() {
 
     // Run all tests
     run_tests(base);
-
-    printf("Results written to 'output.csv'.\n");
 
     return 0;
 }
