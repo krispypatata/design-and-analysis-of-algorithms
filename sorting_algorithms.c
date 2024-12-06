@@ -238,9 +238,17 @@ void quick_sort(int a[], int low, int high) {
 // SORTING ALGORITHMS (GENERICS)
 // ═════════════════════════════════════════════════════════════════════════════════════
 // Helper functions for generic versions of sorting algorithms
-int cmpint(const void *p1, const void *p2){
-    return ((*((int *)p1)) - (*((int *)p2)) > 0 );
+// int cmpint(const void *p1, const void *p2){
+//     return ((*((int *)p1)) - (*((int *)p2)) > 0 );
+// }
+// Correct implementation
+int cmpint(const void *p1, const void *p2) {
+    int int1 = *((int *)p1);
+    int int2 = *((int *)p2);
+    return (int1 - int2);  // return the difference
 }
+
+
 
 // ─────────────────────────────────────────────────────────────────────────────────────
 void genswap(const void *p1, const void *p2, int size){
