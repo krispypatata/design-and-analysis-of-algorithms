@@ -261,12 +261,14 @@ void genswap(const void *p1, const void *p2, int size){
 
 // ═════════════════════════════════════════════════════════════════════════════════════
 // Generic Bubble Sort function
-void genbsort(void *base, int n, int size, int (*cmp)(const void *, const void *)){
+void genbsort(void *base, int n, int size, int (*cmp)(const void *, const void *)) {
     int i, j;
+    char *arr = (char *)base;  // cast to char* for pointer arithmetic
+
     for (i = 0; i < n - 1; i++) {
         for (j = 0; j < n - i - 1; j++) {
-            if (cmp(base + (j * size), base + ((j + 1) * size))) {
-                genswap(base + (j * size), base + ((j + 1) * size), size);
+            if (cmp(arr + (j * size), arr + ((j + 1) * size)) > 0) {
+                genswap(arr + (j * size), arr + ((j + 1) * size), size);
             }
         }
     }
@@ -276,23 +278,25 @@ void genbsort(void *base, int n, int size, int (*cmp)(const void *, const void *
 
 // ═════════════════════════════════════════════════════════════════════════════════════
 // Generic Selection Sort function
-void genselsort(void *base, int n, int size, int (*cmp)(const void *, const void *)){
+void genselsort(void *base, int n, int size, int (*cmp)(const void *, const void *)) {
     int i, j, index_of_min;
+    char *arr = (char *)base;  // cast to char* for pointer arithmetic
 
     for (i = 0; i < n - 1; i++) {
-        // find the index with the minimum value
         index_of_min = i;
 
         for (j = i + 1; j < n; j++) {
-            if (cmp(base + (index_of_min * size), base + (j * size))) {
+            if (cmp(arr + (index_of_min * size), arr + (j * size)) > 0) {
                 index_of_min = j;
             }
         }
 
-        // swap elements
-        genswap(base + (i * size), base + (index_of_min * size), size);
+        if (index_of_min != i) {
+            genswap(arr + (i * size), arr + (index_of_min * size), size);
+        }
     }
 }
+
 
 // genselsort(a, n, sizeof(int), cmpint);
 
@@ -442,3 +446,5 @@ void genqsort(void *base, int low, int high, int size, int (*cmp)(const void *, 
 } // end of genqsort
 
 // genqsort(a, 0, n - 1, sizeof(int), cmpint);
+
+
