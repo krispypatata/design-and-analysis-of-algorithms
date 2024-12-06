@@ -1,0 +1,19 @@
+user@user-Altos-P10-F8 
+---------------------- 
+OS: Ubuntu 22.04.5 LTS x86_64 
+Host: Altos P10 F8 1.0 
+Kernel: 6.8.0-49-generic 
+Uptime: 2 hours, 6 mins 
+Packages: 2038 (dpkg), 12 (snap) 
+Shell: bash 5.1.16 
+Resolution: 1920x1080 
+DE: GNOME 42.9 
+WM: Mutter 
+WM Theme: Adwaita 
+Theme: Yaru-olive-dark [GTK2/3] 
+Icons: Yaru-olive [GTK2/3] 
+Terminal: gnome-terminal 
+CPU: 13th Gen Intel i5-13400 (16) @ 4.600GHz 
+GPU: Intel Device 4682 
+Memory: 4935MiB / 15643MiB 
+
